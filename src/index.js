@@ -3,6 +3,13 @@ const inc = document.getElementById('inc'),
 	dec = document.getElementById('dec'),
 	counter=document.getElementById('counter'),
 	rnd=document.getElementById('rnd');
+
+const incAction= ()=>({type:'INC'});
+const decAction= ()=>({type:'DEC'});
+const rndAction= (payload)=>({type:'RND',payload});
+
+
+
 const reducer = (state = 0, action) => {
 	
 	switch (action.type) {
@@ -19,16 +26,14 @@ const reducer = (state = 0, action) => {
 
 const store = createStore (reducer);
 inc.addEventListener('click',()=>{
-	store.dispatch({type:'INC'});
+	store.dispatch(incAction());
 });
 dec.addEventListener('click',()=>{
-	store.dispatch({type:'DEC'});
+	store.dispatch(decAction());
 });
 rnd.addEventListener('click',()=>{
 	const payload = Math.floor(Math.random()*10);
-	store.dispatch({
-		type:'RND',
-		payload});
+	store.dispatch(rndAction(payload));
 });
 const update =()=>{
 counter.innerHTML= store.getState();
