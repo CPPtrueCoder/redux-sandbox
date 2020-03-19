@@ -1,25 +1,17 @@
 import React from "react";
 import ReactDOM from 'react-dom'
-import {createStore ,bindActionCreators} from "redux";
+import {createStore} from "redux";
+import {Provider} from "react-redux";
 import reducer from "./reducer";
-import Counter from "./counter";
 
-import *  as actions from "./actions";
+import App from "./components/app";
 
-const store = createStore(reducer);
-const {dispatch} =store ;
+const store = createStore (reducer);
 
-const {incAction,decAction,rndAction} = bindActionCreators (actions ,dispatch);
+ReactDOM.render (
+	<Provider store={store}>
+		<App/>
+	</Provider>
+	, document.getElementById ('root'));
 
 
-
-
-
-const update = () => {
-	ReactDOM.render(<Counter counter={store.getState()} inc={incAction} dec={decAction} rnd={()=>{
-		const value = Math.floor(Math.random()*10)
-		rndAction(value);
-	}}/>,document.getElementById('root'));
-};
-update();
-store.subscribe (update);
